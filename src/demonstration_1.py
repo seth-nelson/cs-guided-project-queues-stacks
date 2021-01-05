@@ -11,23 +11,38 @@ not remove the item.
 *Note: Your stacks will contain only integers. You should be able to get a
 runtime of O(1) for push(), pop(), and get_max().*
 """
+
+class LinkedListNode:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
+
 class Stack:
     def __init__(self):
-        """Initialize an empty stack"""
-        self.items = []
+        # initialize an empty stack
+        self.top = None
 
     def push(self, item):
-        """Push a new item onto the stack"""
-        self.items.append(item)
+        # create a new LL node
+        new_node = LinkedListNode(item)
+        # point new node to the current top of the stack
+        new_node.next = self.top
+        # set the TOP variable to the new node
+        self.top = new_node
 
     def pop(self):
-        """Remove and return the last item"""
+        
         # If the stack is empty, return None
-        # (it would also be reasonable to throw an exception)
-        if not self.items:
+        if self.top is None:
             return None
+        
+        old_top = self.top
+        self.top = old_top.next
+        
+        # optional to sever the connection to the old node
+        old_top.next = None
 
-        return self.items.pop()
+        return old_top.data
 
     def peek(self):
         """Return the last item without removing it"""
